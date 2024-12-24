@@ -14,22 +14,38 @@ datasource db {
 }
 
 model User {
-  user_id    Int    @id @default(autoincrement())
-  name       String
-  email      String
-  password   String
-  about      String
-  address    String
-  occupation String
-  status     String
+  user_id     Int           @id @default(autoincrement())
+  name        String
+  email       String
+  password    String
+  about       String
+  address     String
+  occupation  String
+  status      String
+  messageFrom MessageFrom[]
+  messageTo   MessageTo[]
 }
 
 model Message {
-  message_id Int      @id @default(autoincrement())
-  message    String
-  time       DateTime
+  message_id    Int         @id @default(autoincrement())
+  message       String
+  time          DateTime
+  messageFrom   MessageFrom @relation(fields: [messageFromId], references: [id])
+  messageTo     MessageTo   @relation(fields: [messageToId], references: [id])
+  messageFromId Int         @unique
+  messageToId   Int         @unique
 }
 
-model MessageRecieve {
-  id Int @id @default(autoincrement())
+model MessageFrom {
+  id          Int      @id @default(autoincrement())
+  fromUser    User     @relation(fields: [fromUser_id], references: [user_id])
+  fromUser_id Int
+  Message     Message?
+}
+
+model MessageTo {
+  id        Int      @id @default(autoincrement())
+  toUser    User     @relation(fields: [toUser_id], references: [user_id])
+  toUser_id Int
+  Message   Message?
 }
