@@ -1,46 +1,64 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import chatIcon from './svgs/chat.svg'
+import accountIcon from './svgs/account.svg'
+import commIcon from './svgs/community.svg'
+import groupIcon from './svgs/group.svg'
+import settingIcon from './svgs/setting.svg'
+import appStyle from './app.module.css'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
-  const [greeting,setGreeting]=useState("Hello From Client")
-  useEffect(()=>{
-    fetch('http://localhost:3000/test',{mode:'cors'})
-    .then((response)=>{
-      return response.json()
-    })
-    .then((response)=>{setGreeting(response)})
-  },[])
-
+const iconsData=[
+  { 
+    name:"Chat",
+    svg:chatIcon
+  },
+  {
+    name:"Group",
+    svg:groupIcon
+  },
+  {
+    name:"Communities",
+    svg:commIcon
+  },
+  {
+    name:"Setting",
+    svg:settingIcon
+  },
+  {
+    name:"Account",
+    svg:accountIcon
+  }
+  
+]
+function SideTray({theme}){
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <div className="greeting">
-        <h2>{greeting.message}</h2>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className={`${appStyle.iconSideBar} ${theme}`}>
+        {iconsData.map(icon=>{
+          return <img src={icon.svg} alt={icon.name} key={icon.name} className={appStyle.icon}/>
+        })}
+    </div>
+  )
+}
+
+function App(){
+  const [theme,setTheme]=useState('dark');
+  const handleThemeChangeOnClick=(theme)=>{
+    if(theme=='dark'){
+      setTheme('light')
+    }
+    else if(theme=='light'){
+      setTheme('dark')
+    }
+  }
+  return (
+    <>  
+      <SideTray theme={theme}/>
+      <button onClick={()=>{(handleThemeChangeOnClick(theme))}} className={theme}>Toggle Theme {theme}</button>
     </>
   )
 }
+
+
+ 
 
 export default App

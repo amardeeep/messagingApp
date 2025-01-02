@@ -1,0 +1,22 @@
+.iconSideBar{
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left:0;
+    top: 0;
+    min-height: 100vh;
+    padding: 12px;
+    width: 75px;
+    gap: 12px;
+    background-color:#202c33 ;
+    border-right:1px solid #B2B2B2;
+}
+.icon:hover{
+    background-color: #374248;
+}
+.icon{
+    padding: 10px;
+    border-radius: 50%;
+}
+
+
