@@ -17,11 +17,11 @@
   padding: 0;
   box-sizing: border-box;
 }
-.dark{
+.theme-dark{
   background-color: #202c33;
   color: white;
 }
-.light{
+.theme-light{
   background-color: #B2B2B2;
   color: black;
 }

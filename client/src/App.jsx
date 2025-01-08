@@ -30,12 +30,13 @@ const iconsData=[
   }
   
 ]
-function SideTray({theme}){
+function SideTray({theme,handleThemeChangeOnClick}){
   return (
-    <div className={`${appStyle.iconSideBar} ${theme}`}>
+    <div className={`${appStyle.iconSideBar} theme-${theme}`}>
         {iconsData.map(icon=>{
           return <img src={icon.svg} alt={icon.name} key={icon.name} className={appStyle.icon}/>
         })}
+        <button onClick={()=>{(handleThemeChangeOnClick(theme))}} className={`theme-${theme}`}>{theme}</button>
     </div>
   )
 }
@@ -50,10 +51,13 @@ function App(){
       setTheme('dark')
     }
   }
+  useEffect(()=>{
+    document.body.className=`theme-${theme}`
+  },[theme])
   return (
     <>  
-      <SideTray theme={theme}/>
-      <button onClick={()=>{(handleThemeChangeOnClick(theme))}} className={theme}>Toggle Theme {theme}</button>
+      <SideTray theme={theme} handleThemeChangeOnClick={handleThemeChangeOnClick}/>
+      
     </>
   )
 }
