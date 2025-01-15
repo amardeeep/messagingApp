@@ -6,7 +6,7 @@ import groupIcon from './svgs/group.svg'
 import settingIcon from './svgs/setting.svg'
 import appStyle from './app.module.css'
 import './App.css'
-
+import ChatNavigationSection from './NavigationSection'
 const iconsData=[
   { 
     name:"Chat",
@@ -57,7 +57,7 @@ function App(){
   return (
     <>  
       <SideTray theme={theme} handleThemeChangeOnClick={handleThemeChangeOnClick}/>
-      
+      <ChatNavigationSection/>
     </>
   )
 }
