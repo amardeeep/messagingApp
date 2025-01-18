@@ -13,39 +13,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  user_id     Int           @id @default(autoincrement())
-  name        String
-  email       String
-  password    String
-  about       String
-  address     String
-  occupation  String
-  status      String
-  messageFrom MessageFrom[]
-  messageTo   MessageTo[]
+model Users {
+  user_id   Int    @id @default(autoincrement())
+  user_name String @unique
+
+  messagesSent     Messages[] @relation("SentMessages")
+  messagesReceived Messages[] @relation("ReceivedMessages")
 }
 
-model Message {
-  message_id    Int         @id @default(autoincrement())
-  message       String
-  time          DateTime
-  messageFrom   MessageFrom @relation(fields: [messageFromId], references: [id])
-  messageTo     MessageTo   @relation(fields: [messageToId], references: [id])
-  messageFromId Int         @unique
-  messageToId   Int         @unique
-}
+model Messages {
+  message_id   Int    @id @default(autoincrement())
+  message_text String
 
-model MessageFrom {
-  id          Int      @id @default(autoincrement())
-  fromUser    User     @relation(fields: [fromUser_id], references: [user_id])
-  fromUser_id Int
-  Message     Message?
-}
+  created_by     Users @relation("SentMessages", fields: [author_user_id], references: [user_id])
+  author_user_id Int
 
-model MessageTo {
-  id        Int      @id @default(autoincrement())
-  toUser    User     @relation(fields: [toUser_id], references: [user_id])
-  toUser_id Int
-  Message   Message?
+  received_by       Users @relation("ReceivedMessages", fields: [recipient_user_id], references: [user_id])
+  recipient_user_id Int
 }
