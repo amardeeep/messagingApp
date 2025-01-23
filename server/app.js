@@ -14,6 +14,10 @@ app.get("/user/:id", async (req, res) => {
   const user = await queries.getUser(id);
   res.json(user);
 });
+app.get("/user/:id/messages", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const messages = await queries.getMessagesCreatedByUserWithUserId(id);
+});
 app.listen(env.PORT, () => {
   console.log(`Running On ${env.PORT}`);
 });

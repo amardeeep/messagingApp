@@ -38,4 +38,19 @@ const getMessage = async (message_id) => {
   });
   return message;
 };
-module.exports = { getMessage, createMessage, getUser, createUser };
+//get messages of user
+const getMessagesCreatedByUserWithUserId = async (userId) => {
+  const messages = await prisma.messages.findMany({
+    where: {
+      author_user_id: userId,
+    },
+  });
+  return messages;
+};
+module.exports = {
+  getMessage,
+  createMessage,
+  getUser,
+  createUser,
+  getMessagesCreatedByUserWithUserId,
+};
