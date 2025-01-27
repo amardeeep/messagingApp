@@ -14,20 +14,29 @@ datasource db {
 }
 
 model Users {
-  user_id   Int    @id @default(autoincrement())
-  user_name String @unique
-
+  user_id          Int        @id @default(autoincrement())
+  user_name        String     @unique
+  password         String
   messagesSent     Messages[] @relation("SentMessages")
   messagesReceived Messages[] @relation("ReceivedMessages")
+  profile          Profile?
+}
+
+model Profile {
+  profile_id Int      @id @default(autoincrement())
+  user       Users    @relation(fields: [user_id], references: [user_id])
+  full_name  String
+  about      String
+  dateJoined DateTime @updatedAt
+  user_id    Int      @unique
 }
 
 model Messages {
-  message_id   Int    @id @default(autoincrement())
-  message_text String
-
-  created_by     Users @relation("SentMessages", fields: [author_user_id], references: [user_id])
-  author_user_id Int
-
-  received_by       Users @relation("ReceivedMessages", fields: [recipient_user_id], references: [user_id])
+  message_id        Int      @id @default(autoincrement())
+  message_text      String
+  createdAt         DateTime
+  created_by        Users    @relation("SentMessages", fields: [author_user_id], references: [user_id])
+  author_user_id    Int
+  received_by       Users    @relation("ReceivedMessages", fields: [recipient_user_id], references: [user_id])
   recipient_user_id Int
 }
